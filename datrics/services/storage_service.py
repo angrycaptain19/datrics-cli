@@ -130,9 +130,8 @@ class StorageService:
     def save_storage(store=DATRICS_DEFAULT_STORE):
         try:
             storage_path = StorageService.get_storage_path()
-            store_file = open(storage_path, 'w+')
-            store_file.write(json.dumps(store))
-            store_file.close()
+            with open(storage_path, 'w+') as store_file:
+                store_file.write(json.dumps(store))
         except Exception as e:
             print(e)
             sys.exit(0)
@@ -153,9 +152,8 @@ class StorageService:
     def get_storage_file():
         storage_path = StorageService.get_storage_path()
         mode = 'r+' if os.path.exists(storage_path) else 'w+'
-        store_file = open(storage_path, mode)
-        store = store_file.read()
-        store_file.close()
+        with open(storage_path, mode) as store_file:
+            store = store_file.read()
         return store
 
     @staticmethod
